@@ -5,12 +5,8 @@ import 'package:flutter/services.dart';
 import 'package:flutter_tts/flutter_tts.dart';
 
 class ScenarioPage extends StatefulWidget {
-  const ScenarioPage({
-    super.key,
-    required this.id,
-    required this.title,
-    required this.lang
-  });
+  const ScenarioPage(
+      {super.key, required this.id, required this.title, required this.lang});
 
   final String id;
   final String title;
@@ -33,13 +29,11 @@ class _PageState extends State<ScenarioPage> {
     {"lang": "日本語", "value": "ja-JA"},
     {"lang": "English", "value": "en-EN"},
     {"lang": "Indonesia", "value": "id-ID"},
-    {"lang": "中文", "value": "zh-CN", },
-    {"lang": "සිංහල", "value": "si-SI", },
-
+    {"lang": "中文", "value": "zh-CN"},
+    {"lang": "සිංහල", "value": "si-SI"},
   ];
   String? selectLang = "ja-JA";
 
-  //late FlutterTts flutterTts;
   FlutterTts flutterTts = FlutterTts();
   int voiceIndex = 0;
 
@@ -75,13 +69,13 @@ class _PageState extends State<ScenarioPage> {
     await Future.delayed(const Duration(milliseconds: 550));
     await flutterTts.setLanguage(lang);
     // アプリの場合は遅めの方が良い
-    await flutterTts.setSpeechRate(0.7);
-    // web用
-    // if (selectLang == "ja-JA") {
-    //   await flutterTts.setSpeechRate(1.2);
-    // } else {
-    //   await flutterTts.setSpeechRate(1.0);
-    // }
+    // await flutterTts.setSpeechRate(0.7);
+    // web用:日本語は早め
+    if (selectLang == "ja-JA") {
+      await flutterTts.setSpeechRate(1.2);
+    } else {
+      await flutterTts.setSpeechRate(1.0);
+    }
     await flutterTts.setVolume(1.0);
     await flutterTts.setPitch(1.0);
     await flutterTts.speak(senario[voiceIndex][lang]);
@@ -107,7 +101,6 @@ class _PageState extends State<ScenarioPage> {
     super.initState();
     readJson();
     selectLang = widget.lang;
-
   }
 
   @override
@@ -145,7 +138,7 @@ class _PageState extends State<ScenarioPage> {
                 dropdownColor: Colors.black54,
                 style: const TextStyle(color: Colors.white),
                 value: selectLang,
-                items:const [
+                items: const [
                   DropdownMenuItem(
                     value: "ja-JA",
                     child: Text("日本語"),
@@ -176,56 +169,58 @@ class _PageState extends State<ScenarioPage> {
                 })
           ],
         ),
-        body: Container(
-          padding: const EdgeInsets.all(10),
-          decoration: const BoxDecoration(
-            color: Colors.white70,
-          ),
-          child: Column(
-            children:[
-              Image.asset("assets/${widget.id}/thumbnail.png"),
-              Expanded(
-              child: ListView.builder(
-                itemCount: senario.length,
-                itemBuilder: (context, index) {
-                  return ListTile(
-                    title: index == voiceIndex
-                        ? InkWell(
-                            child: Text(
-                              '${senario[index][selectLang]}',
-                              style: const TextStyle(color: Colors.indigo,fontSize: 18,fontWeight: FontWeight.bold),
-                            ),
-                            onTap: () {
-                              textJump(index);
-                            },
-                          )
-                        : InkWell(
-                            child: Text('${senario[index][selectLang]}'),
-                            onTap: () {
-                              textJump(index);
-                            },
-                          ),
-                  );
-                },
-              ),
+        body: Align(
+          alignment: Alignment.center,
+          child: Container(
+            padding: const EdgeInsets.all(10),
+            decoration: const BoxDecoration(
+              color: Colors.white70,
             ),
-           const SizedBox(height: 10,)
-            ],
-
+            child: Column(
+              children: [
+                Image.asset("assets/${widget.id}/thumbnail.png"),
+                Expanded(
+                  child: ConstrainedBox(
+                    constraints: const BoxConstraints(maxWidth: 800),
+                    child: ListView.builder(
+                      padding: const EdgeInsets.only(top: 10, bottom: 50),
+                      itemCount: senario.length,
+                      itemBuilder: (context, index) {
+                        return ListTile(
+                          title: index == voiceIndex
+                              ? InkWell(
+                                  child: Text(
+                                    '${senario[index][selectLang]}',
+                                    style: const TextStyle(
+                                        color: Colors.indigo,
+                                        fontSize: 18,
+                                        fontWeight: FontWeight.bold),
+                                  ),
+                                  onTap: () {
+                                    textJump(index);
+                                  },
+                                )
+                              : InkWell(
+                                  child: Text('${senario[index][selectLang]}'),
+                                  onTap: () {
+                                    textJump(index);
+                                  },
+                                ),
+                        );
+                      },
+                    ),
+                  ),
+                ),
+                const SizedBox(
+                  height: 10,
+                )
+              ],
+            ),
           ),
         ),
         floatingActionButton: Row(
           children: [
             const Spacer(),
-            FloatingActionButton(
-              onPressed: () {
-                voicePlay();
-              },
-              child: const Icon(Icons.play_arrow),
-            ),
-            const SizedBox(
-              width: 5,
-            ),
             FloatingActionButton(
               onPressed: () {
                 voiceStop();
