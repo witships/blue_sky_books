@@ -18,7 +18,7 @@ class Book extends StatefulWidget {
 }
 
 class _BookState extends State<Book> {
-  final List<Map> bookList =[
+  final List<Map> bookList = [
     {
       "id": "momotaro",
       "ja-JA": "桃太郎",
@@ -30,8 +30,8 @@ class _BookState extends State<Book> {
     {
       "id": "taketori",
       "ja-JA": "竹取物語",
-      "en-EN": "bamboo cutter story",
-      "id-ID": "cerita pemotong bambu",
+      "en-EN": "Bamboo cutter story",
+      "id-ID": "Cerita pemotong bambu",
       "zh-CN": "竹刀的故事",
       "si-SI": "උණ බම්බු කපන කතාව"
     },
@@ -46,26 +46,26 @@ class _BookState extends State<Book> {
     {
       "id": "oz",
       "ja-JA": "オズの魔法使い",
-      "en-EN": "wizard of oz",
-      "id-ID": "penyihir ons",
+      "en-EN": "Wizard of oz",
+      "id-ID": "Penyihir ons",
       "zh-CN": "绿野仙踪",
       "si-SI": "oz හි විශාරදයා"
     },
     {
       "id": "peter_pan",
       "ja-JA": "ピーターパン",
-      "en-EN": "peter pan",
-      "id-ID": "peter pan",
+      "en-EN": "Peter pan",
+      "id-ID": "Peter pan",
       "zh-CN": "彼得·潘",
       "si-SI": "පීටර් පෑන්"
     },
     {
       "id": "alice",
       "ja-JA": "不思議の国のアリス",
-      "en-EN": "alice in wonderland",
-      "id-ID": "alice di negeri ajaib",
+      "en-EN": "Alice in wonderland",
+      "id-ID": "Alice di negeri ajaib",
       "zh-CN": "爱丽丝梦游仙境",
-      "si-SI": "alice in wonderland"
+      "si-SI": "Alice in wonderland"
     }
   ];
   final String thumbnail = "thumbnail.png";
@@ -79,7 +79,7 @@ class _BookState extends State<Book> {
             Colors.black45,
             BlendMode.darken,
           ),
-          image: AssetImage('assets/common/blue_sky01.png'),
+          image: AssetImage('assets/common/blue_sky03.png'),
           fit: BoxFit.cover,
         ),
       ),
@@ -142,11 +142,12 @@ class BookTitle extends StatelessWidget {
           ),
           child: Text(
             title,
-            style: const TextStyle(backgroundColor: Colors.white70,fontSize: 18),
+            style:
+                const TextStyle(backgroundColor: Colors.white70, fontSize: 18),
           )),
       onTap: () {
         Navigator.push(context, MaterialPageRoute(builder: (context) {
-          return ScenarioPage(id:id,title: title, lang: lang);
+          return ScenarioPage(id: id, title: title, lang: lang);
         }));
       },
     );

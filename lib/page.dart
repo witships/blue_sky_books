@@ -17,7 +17,7 @@ class ScenarioPage extends StatefulWidget {
 }
 
 class _PageState extends State<ScenarioPage> {
-  List senario = [
+  List scenario = [
     {
       "ja-JA": "むかしむかしあるところに、お爺さんとお婆さんが住んでいました。\n",
       "en-EN": "Once upon a time, there lived an old man and an old woman.",
@@ -43,7 +43,7 @@ class _PageState extends State<ScenarioPage> {
         await rootBundle.loadString('assets/${widget.id}/scenario.json');
     List<dynamic> data = jsonDecode(resJson);
     setState(() {
-      senario = data;
+      scenario = data;
     });
   }
 
@@ -78,11 +78,11 @@ class _PageState extends State<ScenarioPage> {
     }
     await flutterTts.setVolume(1.0);
     await flutterTts.setPitch(1.0);
-    await flutterTts.speak(senario[voiceIndex][lang]);
+    await flutterTts.speak(scenario[voiceIndex][lang]);
 
     // 再生音声の終了時
     flutterTts.setCompletionHandler(() {
-      if (voiceIndex != senario.length - 1) {
+      if (voiceIndex != scenario.length - 1) {
         setState(() {
           voiceIndex++;
           voicePlay();
@@ -112,7 +112,7 @@ class _PageState extends State<ScenarioPage> {
             Colors.black45,
             BlendMode.darken,
           ),
-          image: AssetImage('assets/common/blue_sky01.png'),
+          image: AssetImage('assets/common/blue_sky03.png'),
           fit: BoxFit.cover,
         ),
       ),
@@ -184,28 +184,23 @@ class _PageState extends State<ScenarioPage> {
                     constraints: const BoxConstraints(maxWidth: 800),
                     child: ListView.builder(
                       padding: const EdgeInsets.only(top: 10, bottom: 50),
-                      itemCount: senario.length,
+                      itemCount: scenario.length,
                       itemBuilder: (context, index) {
                         return ListTile(
-                          title: index == voiceIndex
-                              ? InkWell(
-                                  child: Text(
-                                    '${senario[index][selectLang]}',
+                          title: InkWell(
+                            child: index == voiceIndex
+                                ? Text(
+                                    '${scenario[index][selectLang]}',
                                     style: const TextStyle(
                                         color: Colors.indigo,
                                         fontSize: 18,
                                         fontWeight: FontWeight.bold),
-                                  ),
-                                  onTap: () {
-                                    textJump(index);
-                                  },
-                                )
-                              : InkWell(
-                                  child: Text('${senario[index][selectLang]}'),
-                                  onTap: () {
-                                    textJump(index);
-                                  },
-                                ),
+                                  )
+                                : Text('${scenario[index][selectLang]}'),
+                            onTap: () {
+                              textJump(index);
+                            },
+                          ),
                         );
                       },
                     ),

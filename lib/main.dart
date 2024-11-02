@@ -51,7 +51,7 @@ class _MyHomePageState extends State<MyHomePage> {
             Colors.black45,
             BlendMode.darken,
           ),
-          image: AssetImage('assets/common/blue_sky01.png'),
+          image: AssetImage('assets/common/blue_sky03.png'),
           fit: BoxFit.cover,
         ),
       ),
@@ -75,11 +75,13 @@ class _MyHomePageState extends State<MyHomePage> {
             childAspectRatio: 1.5,
             children: [
               for (var lang in langs)
-                LangSelect(id: lang["value"], title: lang["lang"],thumbnail:lang["thumbnail"])
+                LangSelect(
+                    id: lang["value"],
+                    title: lang["lang"],
+                    thumbnail: lang["thumbnail"])
             ],
           ),
         ),
-
       ),
     );
   }
@@ -108,8 +110,11 @@ class LangSelect extends StatelessWidget {
               fit: BoxFit.cover,
             ),
           ),
-          child: Text(title,style: const TextStyle(fontSize: 18, backgroundColor: Colors.white70),)
-      ),
+          child: Text(
+            title,
+            style:
+                const TextStyle(fontSize: 18, backgroundColor: Colors.white70),
+          )),
       onTap: () {
         Navigator.push(context, MaterialPageRoute(builder: (context) {
           return Book(lang: id, title: title);
